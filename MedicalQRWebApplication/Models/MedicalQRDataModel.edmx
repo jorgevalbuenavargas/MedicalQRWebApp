@@ -24,6 +24,7 @@
           <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="medicalLicense" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="MedicalReceipts">
           <Key>
@@ -166,6 +167,7 @@
           <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SecurityCodes" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="Doctor" ToRole="SecurityCode" />
           <NavigationProperty Name="UniqueIdentifierCodes" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="Doctor" ToRole="UniqueIdentifierCode" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Pharmacy">
           <Key>
@@ -267,6 +269,7 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="Models.Doctor">
               <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="medicalLicense" ColumnName="medicalLicense" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />

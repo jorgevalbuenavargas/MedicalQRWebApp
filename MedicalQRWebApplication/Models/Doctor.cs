@@ -26,6 +26,7 @@ namespace MedicalQRWebApplication.Models
         public string lastName { get; set; }
         public string medicalLicense { get; set; }
         public string Status { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SecurityCode> SecurityCodes { get; set; }

@@ -78,6 +78,7 @@ namespace MedicalQRWebApplication.Controllers
                         entity.name = doctor.name;
                         entity.lastName = doctor.lastName;
                         entity.medicalLicense = doctor.medicalLicense;
+                        entity.email = doctor.email;
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
