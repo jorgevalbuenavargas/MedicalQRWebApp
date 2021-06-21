@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalQRWebApplication", "MedicalQRWebApplication\MedicalQRWebApplication.csproj", "{B034C13B-9A08-44D8-8A81-FDC55E8C202A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B034C13B-9A08-44D8-8A81-FDC55E8C202A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B034C13B-9A08-44D8-8A81-FDC55E8C202A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B034C13B-9A08-44D8-8A81-FDC55E8C202A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B034C13B-9A08-44D8-8A81-FDC55E8C202A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {015A17D9-21A8-4B2E-808B-D1E4AE905497}
+	EndGlobalSection
+EndGlobal

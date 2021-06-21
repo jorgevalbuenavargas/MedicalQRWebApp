@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="medicalLicense" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedicalReceipts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="scanDate" Type="datetime" Nullable="false" />
+          <Property Name="validationResult" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="pharmacyId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="uicId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="securityCodeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pharmacies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cuit" Type="nvarchar(max)" />
+          <Property Name="company_name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="business_name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecurityCodes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="securityNumber" Type="int" Nullable="false" />
+          <Property Name="expirationDate" Type="datetime" Nullable="false" />
+          <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UniqueIdentifierCodes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="creationDate" Type="datetime" Nullable="false" />
+          <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__MedicalRe__pharm__72C60C4A">
+          <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
+          <End Role="MedicalReceipts" Type="Self.MedicalReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pharmacies">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MedicalReceipts">
+              <PropertyRef Name="pharmacyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SecurityC__docto__534D60F1">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="SecurityCodes" Type="Self.SecurityCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SecurityCodes">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UniqueIde__docto__60A75C0F">
+          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+          <End Role="UniqueIdentifierCodes" Type="Self.UniqueIdentifierCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UniqueIdentifierCodes">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalReceipts" EntityType="Self.MedicalReceipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pharmacies" EntityType="Self.Pharmacies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityCodes" EntityType="Self.SecurityCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UniqueIdentifierCodes" EntityType="Self.UniqueIdentifierCodes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MedicalRe__pharm__72C60C4A" Association="Self.FK__MedicalRe__pharm__72C60C4A">
+            <End Role="Pharmacies" EntitySet="Pharmacies" />
+            <End Role="MedicalReceipts" EntitySet="MedicalReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SecurityC__docto__534D60F1" Association="Self.FK__SecurityC__docto__534D60F1">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="SecurityCodes" EntitySet="SecurityCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UniqueIde__docto__60A75C0F" Association="Self.FK__UniqueIde__docto__60A75C0F">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="UniqueIdentifierCodes" EntitySet="UniqueIdentifierCodes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MedicalQRDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Models.Admin" />
+          <EntitySet Name="Doctors" EntityType="Models.Doctor" />
+          <EntitySet Name="Pharmacies" EntityType="Models.Pharmacy" />
+          <EntitySet Name="SecurityCodes" EntityType="Models.SecurityCode" />
+          <EntitySet Name="UniqueIdentifierCodes" EntityType="Models.UniqueIdentifierCode" />
+          <AssociationSet Name="FK__SecurityC__docto__534D60F1" Association="Models.FK__SecurityC__docto__534D60F1">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="SecurityCode" EntitySet="SecurityCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UniqueIde__docto__60A75C0F" Association="Models.FK__UniqueIde__docto__60A75C0F">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="UniqueIdentifierCode" EntitySet="UniqueIdentifierCodes" />
+          </AssociationSet>
+          <EntitySet Name="MedicalReceipts" EntityType="Models.MedicalReceipt" />
+          <AssociationSet Name="FK__MedicalRe__pharm__72C60C4A" Association="Models.FK__MedicalRe__pharm__72C60C4A">
+            <End Role="Pharmacy" EntitySet="Pharmacies" />
+            <End Role="MedicalReceipt" EntitySet="MedicalReceipts" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="medicalLicense" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SecurityCodes" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="Doctor" ToRole="SecurityCode" />
+          <NavigationProperty Name="UniqueIdentifierCodes" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="Doctor" ToRole="UniqueIdentifierCode" />
+        </EntityType>
+        <EntityType Name="Pharmacy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="cuit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="company_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="business_name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalReceipts" Relationship="Models.FK__MedicalRe__pharm__72C60C4A" FromRole="Pharmacy" ToRole="MedicalReceipt" />
+        </EntityType>
+        <EntityType Name="SecurityCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="securityNumber" Type="Int32" Nullable="false" />
+          <Property Name="expirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="doctorId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Doctor" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="SecurityCode" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="UniqueIdentifierCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="doctorId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Doctor" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="UniqueIdentifierCode" ToRole="Doctor" />
+        </EntityType>
+        <Association Name="FK__SecurityC__docto__534D60F1">
+          <End Type="Models.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="Models.SecurityCode" Role="SecurityCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SecurityCode">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UniqueIde__docto__60A75C0F">
+          <End Type="Models.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="Models.UniqueIdentifierCode" Role="UniqueIdentifierCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UniqueIdentifierCode">
+              <PropertyRef Name="doctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MedicalReceipt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="scanDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="validationResult" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pharmacyId" Type="Guid" Nullable="false" />
+          <Property Name="uicId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="securityCodeId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pharmacy" Relationship="Models.FK__MedicalRe__pharm__72C60C4A" FromRole="MedicalReceipt" ToRole="Pharmacy" />
+        </EntityType>
+        <Association Name="FK__MedicalRe__pharm__72C60C4A">
+          <End Type="Models.Pharmacy" Role="Pharmacy" Multiplicity="1" />
+          <End Type="Models.MedicalReceipt" Role="MedicalReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pharmacy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MedicalReceipt">
+              <PropertyRef Name="pharmacyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="MedicalQRDBContext">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="Models.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="Models.Doctor">
+              <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="medicalLicense" ColumnName="medicalLicense" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pharmacies">
+            <EntityTypeMapping TypeName="Models.Pharmacy">
+              <MappingFragment StoreEntitySet="Pharmacies">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="business_name" ColumnName="business_name" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="cuit" ColumnName="cuit" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecurityCodes">
+            <EntityTypeMapping TypeName="Models.SecurityCode">
+              <MappingFragment StoreEntitySet="SecurityCodes">
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+                <ScalarProperty Name="expirationDate" ColumnName="expirationDate" />
+                <ScalarProperty Name="securityNumber" ColumnName="securityNumber" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UniqueIdentifierCodes">
+            <EntityTypeMapping TypeName="Models.UniqueIdentifierCode">
+              <MappingFragment StoreEntitySet="UniqueIdentifierCodes">
+                <ScalarProperty Name="doctorId" ColumnName="doctorId" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalReceipts">
+            <EntityTypeMapping TypeName="Models.MedicalReceipt">
+              <MappingFragment StoreEntitySet="MedicalReceipts">
+                <ScalarProperty Name="securityCodeId" ColumnName="securityCodeId" />
+                <ScalarProperty Name="uicId" ColumnName="uicId" />
+                <ScalarProperty Name="pharmacyId" ColumnName="pharmacyId" />
+                <ScalarProperty Name="validationResult" ColumnName="validationResult" />
+                <ScalarProperty Name="scanDate" ColumnName="scanDate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
