@@ -9,9 +9,10 @@ using MedicalQRWebApplication.Models;
 
 namespace MedicalQRWebApplication.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class PharmaciesController : ApiController
     {
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        
         public HttpResponseMessage Get()
         {
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
@@ -78,6 +79,7 @@ namespace MedicalQRWebApplication.Controllers
                         entity.company_name = pharmacy.company_name;
                         entity.business_name = pharmacy.business_name;
                         entity.email = pharmacy.email;
+                        entity.Status = pharmacy.Status;
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
