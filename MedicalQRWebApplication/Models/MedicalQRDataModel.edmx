@@ -25,6 +25,7 @@
           <Property Name="medicalLicense" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="creationDate" Type="date" />
         </EntityType>
         <EntityType Name="MedicalReceipts">
           <Key>
@@ -47,6 +48,7 @@
           <Property Name="business_name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="creationDate" Type="date" />
         </EntityType>
         <EntityType Name="SecurityCodes">
           <Key>
@@ -65,6 +67,7 @@
           <Property Name="status" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modificationDate" Type="datetime" />
         </EntityType>
         <Association Name="FK__MedicalRe__pharm__72C60C4A">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -168,6 +171,7 @@
           <NavigationProperty Name="SecurityCodes" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="Doctor" ToRole="SecurityCode" />
           <NavigationProperty Name="UniqueIdentifierCodes" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="Doctor" ToRole="UniqueIdentifierCode" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="creationDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Pharmacy">
           <Key>
@@ -180,6 +184,7 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MedicalReceipts" Relationship="Models.FK__MedicalRe__pharm__72C60C4A" FromRole="Pharmacy" ToRole="MedicalReceipt" />
+          <Property Name="creationDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="SecurityCode">
           <Key>
@@ -200,6 +205,7 @@
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="doctorId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Doctor" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="UniqueIdentifierCode" ToRole="Doctor" />
+          <Property Name="modificationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__SecurityC__docto__534D60F1">
           <End Type="Models.Doctor" Role="Doctor" Multiplicity="1" />
@@ -269,6 +275,7 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="Models.Doctor">
               <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="medicalLicense" ColumnName="medicalLicense" />
@@ -281,6 +288,7 @@
           <EntitySetMapping Name="Pharmacies">
             <EntityTypeMapping TypeName="Models.Pharmacy">
               <MappingFragment StoreEntitySet="Pharmacies">
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="business_name" ColumnName="business_name" />
@@ -303,6 +311,7 @@
           <EntitySetMapping Name="UniqueIdentifierCodes">
             <EntityTypeMapping TypeName="Models.UniqueIdentifierCode">
               <MappingFragment StoreEntitySet="UniqueIdentifierCodes">
+                <ScalarProperty Name="modificationDate" ColumnName="modificationDate" />
                 <ScalarProperty Name="doctorId" ColumnName="doctorId" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="status" ColumnName="status" />

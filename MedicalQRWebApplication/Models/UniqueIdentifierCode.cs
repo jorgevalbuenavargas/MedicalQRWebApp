@@ -18,6 +18,7 @@ namespace MedicalQRWebApplication.Models
         public string status { get; set; }
         public System.DateTime creationDate { get; set; }
         public System.Guid doctorId { get; set; }
+        public Nullable<System.DateTime> modificationDate { get; set; }
     
         public virtual Doctor Doctor { get; set; }
     }

@@ -177,6 +177,7 @@ namespace MedicalQRWebApplication.Controllers
                         entity.creationDate = uniqueIdentifierCode.creationDate;
                         entity.doctorId = uniqueIdentifierCode.doctorId;
                         entity.status = uniqueIdentifierCode.status;
+                        entity.modificationDate = uniqueIdentifierCode.modificationDate;
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
