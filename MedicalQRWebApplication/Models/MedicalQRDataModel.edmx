@@ -37,6 +37,7 @@
           <Property Name="pharmacyId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="uicId" Type="nvarchar(max)" Nullable="false" />
           <Property Name="securityCodeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="applicationMessage" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Pharmacies">
           <Key>
@@ -242,6 +243,7 @@
           <Property Name="uicId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="securityCodeId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Pharmacy" Relationship="Models.FK__MedicalRe__pharm__72C60C4A" FromRole="MedicalReceipt" ToRole="Pharmacy" />
+          <Property Name="applicationMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__MedicalRe__pharm__72C60C4A">
           <End Type="Models.Pharmacy" Role="Pharmacy" Multiplicity="1" />
@@ -322,6 +324,7 @@
           <EntitySetMapping Name="MedicalReceipts">
             <EntityTypeMapping TypeName="Models.MedicalReceipt">
               <MappingFragment StoreEntitySet="MedicalReceipts">
+                <ScalarProperty Name="applicationMessage" ColumnName="applicationMessage" />
                 <ScalarProperty Name="securityCodeId" ColumnName="securityCodeId" />
                 <ScalarProperty Name="uicId" ColumnName="uicId" />
                 <ScalarProperty Name="pharmacyId" ColumnName="pharmacyId" />

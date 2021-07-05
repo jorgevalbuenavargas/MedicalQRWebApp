@@ -20,6 +20,7 @@ namespace MedicalQRWebApplication.Models
         public System.Guid pharmacyId { get; set; }
         public string uicId { get; set; }
         public string securityCodeId { get; set; }
+        public string applicationMessage { get; set; }
     
         public virtual Pharmacy Pharmacy { get; set; }
     }
