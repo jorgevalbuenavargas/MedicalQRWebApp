@@ -54,6 +54,24 @@ namespace MedicalQRWebApplication.Controllers
                     var message = Request.CreateResponse(HttpStatusCode.Created, doctor);
                     message.Headers.Location = new Uri(Request.RequestUri +
                         doctor.id.ToString());
+
+                    dbContext.Configuration.ProxyCreationEnabled = false;
+                    var foundAdmins = dbContext.Admins.ToList();
+                    Request.CreateResponse(HttpStatusCode.OK, foundAdmins);
+                    foreach (var admin in foundAdmins)
+                    {
+                        var apiKey = Environment.GetEnvironmentVariable("sendGridKey");
+                        var client = new SendGridClient(apiKey);
+                        var from = new EmailAddress(Environment.GetEnvironmentVariable("sendGridEmail"), Environment.GetEnvironmentVariable("sendGridUser"));
+                        var subject = "Nuevo Profesional de la Salud";
+                        var plainTextContent = "Un nuevo Profesional de la Salud (Matricula:" + doctor.medicalLicense + ") ha sido registrado. Valídalo tan pronto como sea posible para que pueda empezar a utilizar la aplicación.";
+                        var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>Un nuevo Profesional de la Salud (Matricula:" + doctor.medicalLicense + ") ha sido registrado. Valídalo tan pronto como sea posible para que pueda empezar a utilizar la aplicación.</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
+                        
+                        var to = new EmailAddress(admin.email, "");
+                        var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                        var response = client.SendEmailAsync(msg);
+                    }
+
                     return message;
                 }
             }
