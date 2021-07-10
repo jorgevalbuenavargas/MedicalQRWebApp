@@ -18,27 +18,45 @@ using System;
 public partial class Doctor
 {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Doctor()
-        {
-            this.SecurityCodes = new HashSet<SecurityCode>();
-            this.UniqueIdentifierCodes = new HashSet<UniqueIdentifierCode>();
-        }
-    
-        public System.Guid id { get; set; }
-        public string name { get; set; }
-        public string lastName { get; set; }
-        public string medicalLicense { get; set; }
-        public string Status { get; set; }
-        public string email { get; set; }
-        public Nullable<System.DateTime> creationDate { get; set; }
-        public string GmailID { get; set; }
-        public string FacebookID { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Doctor()
+    {
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SecurityCode> SecurityCodes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UniqueIdentifierCode> UniqueIdentifierCodes { get; set; }
+        this.SecurityCodes = new HashSet<SecurityCode>();
+
+        this.UniqueIdentifierCodes = new HashSet<UniqueIdentifierCode>();
+
+    }
+
+
+    public System.Guid id { get; set; }
+
+    public string name { get; set; }
+
+    public string lastName { get; set; }
+
+    public string medicalLicense { get; set; }
+
+    public string Status { get; set; }
+
+    public string email { get; set; }
+
+    public Nullable<System.DateTime> creationDate { get; set; }
+
+    public string GmailID { get; set; }
+
+    public string FacebookID { get; set; }
+
+
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<SecurityCode> SecurityCodes { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+    public virtual ICollection<UniqueIdentifierCode> UniqueIdentifierCodes { get; set; }
+
 }
 
 }

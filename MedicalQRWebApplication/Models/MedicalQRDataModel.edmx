@@ -75,7 +75,6 @@
           <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="modificationDate" Type="datetime" />
-          <Property Name="image" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK__MedicalRe__pharm__72C60C4A">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -220,7 +219,6 @@
           <Property Name="doctorId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Doctor" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="UniqueIdentifierCode" ToRole="Doctor" />
           <Property Name="modificationDate" Type="DateTime" Precision="3" />
-          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__SecurityC__docto__534D60F1">
           <End Type="Models.Doctor" Role="Doctor" Multiplicity="1" />
@@ -333,7 +331,6 @@
           <EntitySetMapping Name="UniqueIdentifierCodes">
             <EntityTypeMapping TypeName="Models.UniqueIdentifierCode">
               <MappingFragment StoreEntitySet="UniqueIdentifierCodes">
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="modificationDate" ColumnName="modificationDate" />
                 <ScalarProperty Name="doctorId" ColumnName="doctorId" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />

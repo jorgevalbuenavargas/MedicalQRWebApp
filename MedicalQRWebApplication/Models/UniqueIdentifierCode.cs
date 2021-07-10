@@ -28,8 +28,6 @@ public partial class UniqueIdentifierCode
 
     public Nullable<System.DateTime> modificationDate { get; set; }
 
-    public string image { get; set; }
-
 
 
     public virtual Doctor Doctor { get; set; }
