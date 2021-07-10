@@ -129,6 +129,7 @@ namespace MedicalQRWebApplication.Controllers
                         entity.securityNumber = securityCode.securityNumber;
                         entity.expirationDate = securityCode.expirationDate;
                         entity.doctorId = securityCode.doctorId;
+                        entity.creationDate = securityCode.creationDate;
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
