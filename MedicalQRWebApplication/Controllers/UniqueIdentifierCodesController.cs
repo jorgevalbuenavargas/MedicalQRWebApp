@@ -47,6 +47,35 @@ namespace MedicalQRWebApplication.Controllers
                 }
             }
         }
+
+        public HttpResponseMessage GetSendNotificationPendingUICByDoctor(Guid doctorId, String email)
+        {
+            using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
+            {
+                dbContext.Configuration.ProxyCreationEnabled = false;
+                var entity = dbContext.UniqueIdentifierCodes.Where(e => e.doctorId == doctorId).ToList();
+                if (entity != null)
+                {
+                    var apiKey = Environment.GetEnvironmentVariable("sendGridKey");
+                    var client = new SendGridClient(apiKey);
+                    var from = new EmailAddress(Environment.GetEnvironmentVariable("sendGridEmail"), Environment.GetEnvironmentVariable("sendGridUser"));
+                    var subject = "Tienes códigos QR pendientes de habilitar";
+                    var to = new EmailAddress(email, "");
+                    var plainTextContent = "Tienes Códigos QR pendientes de habilitar, si ya has generado tu nuevo sello o libreta de prescripciones, puedes ingresar a la aplicación para habilitar tu CUI";
+                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>Tienes Códigos QR pendientes de habilitar, si ya has generado tu nuevo sello o libreta de prescripciones, puedes ingresar a la aplicación para habilitar tu CUI</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
+                    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                    var response = client.SendEmailAsync(msg);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "UIC not found for doctor with ID " + doctorId.ToString());
+                }
+            }
+        }
+
         public HttpResponseMessage Get(Guid id)
         {
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
@@ -65,7 +94,8 @@ namespace MedicalQRWebApplication.Controllers
             }
         }
 
-        public async System.Threading.Tasks.Task<HttpResponseMessage> GetInformUICAsync(Guid id, String email)
+
+        public HttpResponseMessage GetInformUIC(Guid id, String email)
         {
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
             {
@@ -90,7 +120,7 @@ namespace MedicalQRWebApplication.Controllers
                     var subject = "Información de tu código QR";
                     var to = new EmailAddress(email, "");
                     var plainTextContent = "¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!";
-                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>" ;
+                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
                     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                     var bytes = File.ReadAllBytes(qrImageFile);
                     var file = Convert.ToBase64String(bytes);

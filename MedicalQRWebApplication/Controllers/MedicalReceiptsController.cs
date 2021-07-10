@@ -80,6 +80,7 @@ namespace MedicalQRWebApplication.Controllers
                         entity.pharmacyId = medicalReceipt.pharmacyId;
                         entity.uicId = medicalReceipt.uicId;
                         entity.securityCodeId = medicalReceipt.securityCodeId;
+                        entity.applicationMessage = medicalReceipt.applicationMessage;
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }

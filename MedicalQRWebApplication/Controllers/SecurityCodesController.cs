@@ -7,6 +7,10 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using MedicalQRWebApplication.Models;
 
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
+
 namespace MedicalQRWebApplication.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -47,6 +51,36 @@ namespace MedicalQRWebApplication.Controllers
                 var entity = dbContext.SecurityCodes.FirstOrDefault(e => e.id == id);
                 if (entity != null)
                 {
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Security Code with ID " + id.ToString() + " not found");
+                }
+            }
+        }
+
+        public HttpResponseMessage GetNotifySecurityCode(Guid id, String email)
+        {
+            using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
+            {
+                dbContext.Configuration.ProxyCreationEnabled = false;
+                var entity = dbContext.SecurityCodes.FirstOrDefault(e => e.id == id);
+                if (entity != null)
+                {
+                    //Generar Contenido de Email y Enviar
+
+                    var apiKey = Environment.GetEnvironmentVariable("sendGridKey");
+                    var client = new SendGridClient(apiKey);
+                    var from = new EmailAddress(Environment.GetEnvironmentVariable("sendGridEmail"), Environment.GetEnvironmentVariable("sendGridUser"));
+                    var subject = "Este es tu Código de Seguridad";
+                    var to = new EmailAddress(email, "");
+                    var plainTextContent = "Tu código de seguridad vigente es: " + entity.securityNumber;
+                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>Tu código de seguridad vigente es: " + entity.securityNumber + "</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
+                    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                    var response = client.SendEmailAsync(msg);
+
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
                 else

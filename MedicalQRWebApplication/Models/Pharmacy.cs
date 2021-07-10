@@ -17,13 +17,22 @@ using System;
     
 public partial class Pharmacy
 {
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Pharmacy()
-    {
-
-        this.MedicalReceipts = new HashSet<MedicalReceipt>();
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pharmacy()
+        {
+            this.MedicalReceipts = new HashSet<MedicalReceipt>();
+        }
+    
+        public System.Guid id { get; set; }
+        public string cuit { get; set; }
+        public string company_name { get; set; }
+        public string business_name { get; set; }
+        public string email { get; set; }
+        public string Status { get; set; }
+        public Nullable<System.DateTime> creationDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalReceipt> MedicalReceipts { get; set; }
     }
 
 
