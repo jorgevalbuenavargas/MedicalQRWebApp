@@ -280,6 +280,7 @@
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicalReceiptsController.cs" />
+    <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\PharmaciesController.cs" />
     <Compile Include="Controllers\SecurityCodesController.cs" />
     <Compile Include="Controllers\UniqueIdentifierCodesController.cs" />

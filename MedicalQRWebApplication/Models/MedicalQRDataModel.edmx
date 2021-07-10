@@ -13,7 +13,8 @@
           <Property Name="name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="lastName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="email" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GmailID" Type="nvarchar(max)" />
+          <Property Name="FacebookID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Doctors">
           <Key>
@@ -25,6 +26,9 @@
           <Property Name="medicalLicense" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="creationDate" Type="date" />
+          <Property Name="GmailID" Type="nvarchar(max)" />
+          <Property Name="FacebookID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="MedicalReceipts">
           <Key>
@@ -47,6 +51,9 @@
           <Property Name="business_name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="creationDate" Type="date" />
+          <Property Name="GmailID" Type="nvarchar(max)" />
+          <Property Name="FacebookID" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SecurityCodes">
           <Key>
@@ -56,6 +63,7 @@
           <Property Name="securityNumber" Type="int" Nullable="false" />
           <Property Name="expirationDate" Type="datetime" Nullable="false" />
           <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="creationDate" Type="date" />
         </EntityType>
         <EntityType Name="UniqueIdentifierCodes">
           <Key>
@@ -65,6 +73,8 @@
           <Property Name="status" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="creationDate" Type="datetime" Nullable="false" />
           <Property Name="doctorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="modificationDate" Type="datetime" />
+          <Property Name="image" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK__MedicalRe__pharm__72C60C4A">
           <End Role="Pharmacies" Type="Self.Pharmacies" Multiplicity="1" />
@@ -154,7 +164,8 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="lastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -168,6 +179,9 @@
           <NavigationProperty Name="SecurityCodes" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="Doctor" ToRole="SecurityCode" />
           <NavigationProperty Name="UniqueIdentifierCodes" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="Doctor" ToRole="UniqueIdentifierCode" />
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="creationDate" Type="DateTime" Precision="0" />
+          <Property Name="GmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Pharmacy">
           <Key>
@@ -180,6 +194,9 @@
           <Property Name="email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MedicalReceipts" Relationship="Models.FK__MedicalRe__pharm__72C60C4A" FromRole="Pharmacy" ToRole="MedicalReceipt" />
+          <Property Name="creationDate" Type="DateTime" Precision="0" />
+          <Property Name="GmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SecurityCode">
           <Key>
@@ -190,6 +207,7 @@
           <Property Name="expirationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="doctorId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Doctor" Relationship="Models.FK__SecurityC__docto__534D60F1" FromRole="SecurityCode" ToRole="Doctor" />
+          <Property Name="creationDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="UniqueIdentifierCode">
           <Key>
@@ -200,6 +218,8 @@
           <Property Name="creationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="doctorId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Doctor" Relationship="Models.FK__UniqueIde__docto__60A75C0F" FromRole="UniqueIdentifierCode" ToRole="Doctor" />
+          <Property Name="modificationDate" Type="DateTime" Precision="3" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__SecurityC__docto__534D60F1">
           <End Type="Models.Doctor" Role="Doctor" Multiplicity="1" />
@@ -258,7 +278,8 @@
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="Models.Admin">
               <MappingFragment StoreEntitySet="Admins">
-                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="GmailID" ColumnName="GmailID" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -269,6 +290,9 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="Models.Doctor">
               <MappingFragment StoreEntitySet="Doctors">
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="GmailID" ColumnName="GmailID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="medicalLicense" ColumnName="medicalLicense" />
@@ -281,6 +305,9 @@
           <EntitySetMapping Name="Pharmacies">
             <EntityTypeMapping TypeName="Models.Pharmacy">
               <MappingFragment StoreEntitySet="Pharmacies">
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="GmailID" ColumnName="GmailID" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="business_name" ColumnName="business_name" />
@@ -293,6 +320,7 @@
           <EntitySetMapping Name="SecurityCodes">
             <EntityTypeMapping TypeName="Models.SecurityCode">
               <MappingFragment StoreEntitySet="SecurityCodes">
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="doctorId" ColumnName="doctorId" />
                 <ScalarProperty Name="expirationDate" ColumnName="expirationDate" />
                 <ScalarProperty Name="securityNumber" ColumnName="securityNumber" />
@@ -303,6 +331,8 @@
           <EntitySetMapping Name="UniqueIdentifierCodes">
             <EntityTypeMapping TypeName="Models.UniqueIdentifierCode">
               <MappingFragment StoreEntitySet="UniqueIdentifierCodes">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="modificationDate" ColumnName="modificationDate" />
                 <ScalarProperty Name="doctorId" ColumnName="doctorId" />
                 <ScalarProperty Name="creationDate" ColumnName="creationDate" />
                 <ScalarProperty Name="status" ColumnName="status" />

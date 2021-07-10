@@ -7,19 +7,18 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using MedicalQRWebApplication.Models;
 
-
 namespace MedicalQRWebApplication.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class DoctorsController : ApiController
+    public class AdminsController : ApiController
     {
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public HttpResponseMessage Get()
         {
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
             {
                 dbContext.Configuration.ProxyCreationEnabled = false;
-                var foundDoctors = dbContext.Doctors.ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, foundDoctors);
+                var foundAdmins = dbContext.Admins.ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, foundAdmins);
             }
         }
         public HttpResponseMessage Get(Guid id)
@@ -27,30 +26,30 @@ namespace MedicalQRWebApplication.Controllers
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
             {
                 dbContext.Configuration.ProxyCreationEnabled = false;
-                var entity = dbContext.Doctors.FirstOrDefault(e => e.id == id);
+                var entity = dbContext.Admins.FirstOrDefault(e => e.id == id);
                 if (entity != null)
-                {                    
+                {
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
                 else
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        "Doctor with ID " + id.ToString() + " not found");
+                        "Admin with ID " + id.ToString() + " not found");
                 }
             }
         }
 
-        public HttpResponseMessage Post([FromBody] Doctor doctor)
+        public HttpResponseMessage Post([FromBody] Admin admin)
         {
             try
             {
                 using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
                 {
-                    dbContext.Doctors.Add(doctor);
+                    dbContext.Admins.Add(admin);
                     dbContext.SaveChanges();
-                    var message = Request.CreateResponse(HttpStatusCode.Created, doctor);
+                    var message = Request.CreateResponse(HttpStatusCode.Created, admin);
                     message.Headers.Location = new Uri(Request.RequestUri +
-                        doctor.id.ToString());
+                        admin.id.ToString());
                     return message;
                 }
             }
@@ -60,27 +59,26 @@ namespace MedicalQRWebApplication.Controllers
             }
         }
 
-        public HttpResponseMessage Put(Guid id, [FromBody] Doctor doctor)
+        public HttpResponseMessage Put(Guid id, [FromBody] Admin admin)
         {
             try
             {
                 using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
                 {
                     dbContext.Configuration.ProxyCreationEnabled = false;
-                    var entity = dbContext.Doctors.FirstOrDefault(e => e.id == id);
+                    var entity = dbContext.Admins.FirstOrDefault(e => e.id == id);
                     if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Doctor with ID " + id.ToString() + " not found to update");
+                            "Admin with ID " + id.ToString() + " not found to update");
                     }
                     else
                     {
-                        entity.name = doctor.name;
-                        entity.lastName = doctor.lastName;
-                        entity.medicalLicense = doctor.medicalLicense;
-                        entity.email = doctor.email;
-                        entity.GmailID = doctor.GmailID;
-                        entity.FacebookID = doctor.FacebookID;
+                        entity.name = admin.name;
+                        entity.lastName = admin.lastName;
+                        entity.email = admin.email;
+                        entity.GmailID = admin.GmailID;
+                        entity.FacebookID = admin.FacebookID;
 
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -99,15 +97,15 @@ namespace MedicalQRWebApplication.Controllers
             {
                 using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
                 {
-                    var entity = dbContext.Doctors.FirstOrDefault(e => e.id == id);
+                    var entity = dbContext.Admins.FirstOrDefault(e => e.id == id);
                     if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Doctor with ID " + id.ToString() + " not found to delete");
+                            "Admin with ID " + id.ToString() + " not found to delete");
                     }
                     else
                     {
-                        dbContext.Doctors.Remove(entity);
+                        dbContext.Admins.Remove(entity);
                         dbContext.SaveChanges();
                         return Request.CreateResponse(HttpStatusCode.OK);
                     }
