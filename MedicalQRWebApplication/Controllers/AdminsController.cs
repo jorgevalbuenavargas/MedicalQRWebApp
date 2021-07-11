@@ -9,9 +9,10 @@ using MedicalQRWebApplication.Models;
 
 namespace MedicalQRWebApplication.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AdminsController : ApiController
     {
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        
         public HttpResponseMessage Get()
         {
             using (MedicalQRDBContext dbContext = new MedicalQRDBContext())

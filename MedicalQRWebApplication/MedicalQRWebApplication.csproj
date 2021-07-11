@@ -381,6 +381,7 @@
     <Content Include="file.json" />
     <None Include="Properties\PublishProfiles\medicalqrapi - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MedicalQRWebAPI - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\MedicalQRWebApp - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MedicalQRWebApplication - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
