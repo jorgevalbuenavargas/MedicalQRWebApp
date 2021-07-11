@@ -104,13 +104,17 @@ namespace MedicalQRWebApplication.Controllers
                 if (entity != null)
                 {
                     //Generar QR Code
-                    var qrImageFile = "C:\\temp\\" + entity.id + ".png";
+                    //var qrImageFile = "C:\\temp\\" + entity.id + ".png";
                     string stringQRCode = entity.id.ToString().ToUpper();
                     QRCodeGenerator qrGenerator = new QRCodeGenerator();
                     QRCodeData qrCodeData = qrGenerator.CreateQrCode(stringQRCode, QRCodeGenerator.ECCLevel.Q);
                     QRCode qrCode = new QRCode(qrCodeData);
                     Bitmap qrCodeImage = qrCode.GetGraphic(20);
-                    qrCodeImage.Save(qrImageFile, ImageFormat.Png);
+                    MemoryStream qrImageFile = new MemoryStream();
+                    qrCodeImage.Save(qrImageFile, ImageFormat.Bmp);
+                    string imgString = Convert.ToBase64String(qrImageFile.ToArray());
+                    //qrCodeImage.Save(qrImageFile, ImageFormat.Png);
+
 
                     //Generar Contenido de Email y Enviar
 
@@ -120,14 +124,14 @@ namespace MedicalQRWebApplication.Controllers
                     var subject = "Información de tu código QR";
                     var to = new EmailAddress(email, "");
                     var plainTextContent = "¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!";
-                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
+                    var htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>¡Adjunto encontrarás tu código QR para que lo utilices en tu sello!</p></div>" + "<div><p>Saludos</p></div>" + "<div><img src ='data:image/Bmp;base64," + imgString + "' width='200' height='200'></div>" + "<div><p>Medical QR</p></div>";
                     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                    var bytes = File.ReadAllBytes(qrImageFile);
-                    var file = Convert.ToBase64String(bytes);
-                    msg.AddAttachment("codigoqr.png", file);
+                    //var bytes = File.ReadAllBytes(qrImageFile.ToString());
+                    //var file = Convert.ToBase64String(bytes);
+                    //msg.AddAttachment("codigoqr.png", file);
                     var response = client.SendEmailAsync(msg);
                     //var response = await client.SendEmailAsync(msg);
-                    File.Delete(qrImageFile);
+                    //File.Delete(qrImageFile);
 
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
