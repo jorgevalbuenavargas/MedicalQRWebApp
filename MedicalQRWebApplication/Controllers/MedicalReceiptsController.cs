@@ -40,6 +40,24 @@ namespace MedicalQRWebApplication.Controllers
             }
         }
 
+        public HttpResponseMessage GetByPharmacy(Guid pharmacyId)
+        {
+            using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
+            {
+                dbContext.Configuration.ProxyCreationEnabled = false;
+                var entity = dbContext.MedicalReceipts.Where(e => e.pharmacyId == pharmacyId).ToList();
+                if (entity != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Medical Receipts not found for pharmacy with ID " + pharmacyId.ToString());
+                }
+            }
+        }
+
         public HttpResponseMessage Post([FromBody] MedicalReceipt medicalReceipt)
         {
             try
