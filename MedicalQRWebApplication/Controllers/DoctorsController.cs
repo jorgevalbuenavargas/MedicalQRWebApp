@@ -43,6 +43,24 @@ namespace MedicalQRWebApplication.Controllers
             }
         }
 
+        public HttpResponseMessage GetByProvider(String providerId)
+        {
+            using (MedicalQRDBContext dbContext = new MedicalQRDBContext())
+            {
+                dbContext.Configuration.ProxyCreationEnabled = false;
+                var entity = dbContext.Doctors.Where(e => e.GmailID == providerId || e.FacebookID == providerId).ToList();
+                if (entity != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "User not found with ID " + providerId);
+                }
+            }
+        }
+
         public HttpResponseMessage Post([FromBody] Doctor doctor)
         {
             try
