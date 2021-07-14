@@ -107,6 +107,7 @@ namespace MedicalQRWebApplication.Controllers
                 {
                     dbContext.Configuration.ProxyCreationEnabled = false;
                     var entity = dbContext.Doctors.FirstOrDefault(e => e.id == id);
+                    var oldStatus = entity.Status; 
                     if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound,
@@ -131,17 +132,18 @@ namespace MedicalQRWebApplication.Controllers
                         var subject = "";
                         var plainTextContent = "";
                         var htmlContent = "";
-                        if (doctor.Status.Equals("Activo"))
+                        if (oldStatus.Equals("Inactivo") && doctor.Status.Equals("Activo"))
                         {
                             subject = "Tu cuenta ha sido habilitada";
                             plainTextContent = "Te informamos que tu cuenta ha sido habilitada. Si tienes inconvenientes con el inicio de sesión, puedes contactarnos a la siguiente dirección de correo electrónico: admin@medicalqr.com.ar";
                             htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>Te informamos que tu cuenta ha sido habilitada. Si tienes inconvenientes con el inicio de sesión, puedes contactarnos a la siguiente dirección de correo electrónico: admin@medicalqr.com.ar</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
-                        } else
+                        } else if(oldStatus.Equals("Activo") && doctor.Status.Equals("Inactivo"))
                         {
                             subject = "Tu cuenta ha sido deshabilitada";
                             plainTextContent = "Te informamos que tu cuenta ha sido deshabilitada. Para mayor información puedes contactarte a la siguiente dirección de correo electrónico: admin@medicalqr.com.ar";
                             htmlContent = "<div><p>Estimado(a),</div>" + "<div><p>Te informamos que tu cuenta ha sido deshabilitada. Para mayor información puedes contactarte a la siguiente dirección de correo electrónico: admin@medicalqr.com.ar</p></div>" + "<div><p>Saludos</p></div>" + "<div><p>Medical QR</p></div>";
                         }
+
                         var to = new EmailAddress(doctor.email, "");  
                         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                         var response = client.SendEmailAsync(msg);
